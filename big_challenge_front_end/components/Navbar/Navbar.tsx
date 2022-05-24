@@ -2,13 +2,14 @@ import {GuestNavbar} from "./GuestNavbar";
 import {PatientProfile} from "../profile/PatientProfile";
 import {PatientNavbar} from "./PatientNavbar";
 import {DoctorNavbar} from "./DoctorNavbar";
-import {useContext} from "react";
-import {UserContext} from "../../context/UserContext";
+import {useEffect, useState} from "react";
+import {getRole} from "../../utils/LocalUserStorage";
 
 
 export const Navbar = () => {
+    const [type, setType] = useState('')
 
-    let type = "patient"
+    useEffect(()=>setType(getRole()),[])
 
     let navbar = <GuestNavbar/>
     if(type=="patient"){

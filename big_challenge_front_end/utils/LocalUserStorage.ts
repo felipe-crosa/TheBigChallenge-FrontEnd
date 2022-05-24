@@ -11,11 +11,11 @@ type User = {
     role : string
 }
 
-export const getUser = () => (JSON.parse( localStorage.getItem('user') || '' ))
+export const getUser = () => (JSON.parse( localStorage.getItem('user') || '{}' ))
 
 export const getRole = () => {
     const user = getUser();
-    if(user){
+    if(user && user.role){
         return user.role[0]
     }
     return ''
