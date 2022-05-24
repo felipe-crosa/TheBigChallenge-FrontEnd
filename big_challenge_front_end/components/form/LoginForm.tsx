@@ -58,7 +58,7 @@ const LoginForm: NextPage = () => {
             <h3 className="my-5 font-bold text-xl">Enter your Account</h3>
             <TextInput value={email} changeEvent={handleEmailChange} type="text" placeholder={"Enter Email"}/>
             <TextInput value={password} changeEvent={handlePasswordChange} type="password" placeholder={"Enter Password"}/>
-            <button disabled={loading} onClick={handleClick} className="border-x border-y border-blue-500 mt-5 h-10 w-2/6 rounded-xl text-blue-600
+            <button disabled={loading} onClick={handleClick} className="disabled:bg-white border-x border-y border-blue-500 mt-5 h-10 w-2/6 rounded-xl text-blue-600
                                hover:bg-blue-500 hover:text-white ">
                 <p hidden={loading}>Login</p>
                 <Loading size={"sm"} hidden={!loading}/>
