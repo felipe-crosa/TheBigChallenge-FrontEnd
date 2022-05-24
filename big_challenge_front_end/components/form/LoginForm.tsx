@@ -61,7 +61,7 @@ const LoginForm: NextPage = () => {
             <button disabled={loading} onClick={handleClick} className="border-x border-y border-blue-500 mt-5 h-10 w-2/6 rounded-xl text-blue-600
                                hover:bg-blue-500 hover:text-white ">
                 <p hidden={loading}>Login</p>
-                <Loading hidden={!loading}/>
+                <Loading size={"sm"} hidden={!loading}/>
             </button>
             <p className="mt-5 text-gray-500">Don't have an account yet? <Link href="/register" passHref><a
                 className="hover:text-blue-400">Sign Up</a></Link></p>
