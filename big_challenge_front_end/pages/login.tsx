@@ -1,10 +1,11 @@
-import {NextPage} from "next";
+import {GetServerSideProps, NextPage} from "next";
 import styles from "../styles/Home.module.css";
 import {NextUIProvider, Text} from "@nextui-org/react";
 import {TextInput} from "../components/form/textInput";
 import {Switch} from "@mui/material";
 import LoginForm from "../components/form/LoginForm";
 import {Layout} from "../components/layout/MainLayout";
+import {getSession} from "next-auth/react";
 
 
 const LoginPage: NextPage = () => {
@@ -24,6 +25,28 @@ const LoginPage: NextPage = () => {
     </NextUIProvider>
 
     );
+}
+export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+
+    const session = await getSession({ req });
+    // console.log({session});
+
+    let { p = '/' } = query;
+
+    if ( session ) {
+        (session.user.role == 'patient') ? p='/submissions' : p='/discover'
+        return {
+            redirect: {
+                destination: p.toString(),
+                permanent: false
+            }
+        }
+    }
+
+
+    return {
+        props: { }
+    }
 }
 
 export default LoginPage

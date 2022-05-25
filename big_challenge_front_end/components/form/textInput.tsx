@@ -6,6 +6,7 @@ type InputProps = {
     type?:string;
     changeEvent?:Function
     value?:string
+    error?:boolean
 }
 
 export const TextInput: NextPage<InputProps> = (props:InputProps) => {
@@ -16,10 +17,13 @@ export const TextInput: NextPage<InputProps> = (props:InputProps) => {
         }
     }
 
+    let appliedClass = "border-2 mx-5 my-3 h-12 rounded-md p-3 w-10/12 hover:border-blue-400 hover:placeholder:text-blue-200 focus:border-blue-400 focus:placeholder:text-blue-200"
+    if(props.error){
+        appliedClass = "border-2 mx-5 my-3 h-12 rounded-md p-3 w-10/12 border-red-300 hover:border-red-500 hover:placeholder:text-red-200 focus:border-red-500 focus:placeholder:text-red-200"
+    }
+
     return (
         <input value={props.value} onChange={(event)=>handleChange(event)} type={props.type} placeholder={props.placeholder}
-               className="border-2 mx-5 my-3 h-12 rounded-md p-3 w-10/12
-                           hover:border-blue-400 hover:placeholder:text-blue-200
-                           focus:border-blue-400 focus:placeholder:text-blue-200"/>
+               className={appliedClass}/>
     );
 }

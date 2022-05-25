@@ -1,6 +1,7 @@
 import axios from "axios";
+import {useSession} from "next-auth/react";
 
-const axiosRequest = axios.create({
+export const axiosRequest = axios.create({
     baseURL: 'http://localhost/api',
     headers: {
         'Accept': 'application/json',
@@ -10,7 +11,7 @@ const axiosRequest = axios.create({
 const laravelApi = () => {
     axiosRequest.interceptors.request.use((config) => {
             if (config.headers) {
-                config.headers['Authorization'] = "Bearer "+localStorage.getItem('token') as string;
+                config.headers['Authorization'] = "Bearer "/* + localStorage.getItem('token')*/ as string;
             }
             return config;
         }

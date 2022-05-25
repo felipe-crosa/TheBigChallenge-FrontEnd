@@ -3,6 +3,8 @@ import {Layout} from "../../components/layout/MainLayout";
 import React from "react";
 import {Chip, Divider, Grid} from "@mui/material";
 import {SubmissionCard} from "../../components/SubmissionCards/SubmissionCard";
+import {GetServerSideProps} from "next";
+import {getSession} from "next-auth/react";
 
 
 const AssignmentPage: NextPage = () => {
@@ -99,5 +101,13 @@ const AssignmentPage: NextPage = () => {
         </Layout>
     )
 }
+
+export const getServerSideProps: GetServerSideProps = async ({req,query}) => {
+
+    return {
+        props: {}
+    }
+}
+
 
 export default AssignmentPage

@@ -2,9 +2,15 @@ import {AppBar, Divider, IconButton, Toolbar, Typography} from "@mui/material";
 import Link from "next/link";
 import SearchIcon from '@mui/icons-material/Search';
 import React from "react";
+import {ProfileMenu} from "./ProfileMenu";
 
 export const DoctorNavbar = () => {
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
     return (
+
 
         <div className="w-full h-18 bg-blue-500 flex align-middle  justify-between">
             <div className="flex space-x-2 md:space-x-6 align-middle justify-center my-auto">
@@ -26,18 +32,22 @@ export const DoctorNavbar = () => {
 
 
             <div className="flex align-middle justify-center my-auto mr-2 md:mr-10">
-                <Link href="/profile">
-                    <div className="bg-white rounded-full p-1">
-                    <img width={35} className="rounded-full" src="/user.svg"/>
-                    </div>
+                <button
 
-                    {/*<a className="text-white font-semibold text-sm">Profile</a>*/}
-                </Link>
+                    onClick={handleClick}>
+                    <div className="bg-white rounded-full p-1">
+                        <img width={35} className="rounded-full" src="/user.svg"/>
+                    </div>
+                </button>
             </div>
+
+            <ProfileMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} handleClick={handleClick}/>
+
 
         </div>
 
 
-    );
+    )
+        ;
 }
 

@@ -5,10 +5,12 @@ import { useState} from "react";
 import Link from "next/link";
 import laravelApi from "../../api/SubmissionApi";
 import {Loading} from "@nextui-org/react";
+import {router} from "next/client";
+import {useRouter} from "next/router";
 
 
 const RegisterForm: NextPage = () => {
-
+    const router = useRouter();
     const [loading, setLoading] = useState(false)
 
 
@@ -41,7 +43,8 @@ const RegisterForm: NextPage = () => {
         laravelApi().post('/register',{name,email,password,role,password_confirmation}).then(
             (response)=> {
                 setLoading(false)
-                window.location.replace('/login')
+                router.replace('/login')
+                //window.location.replace('/login')
             }
         ).catch(
             (error)=> {
@@ -92,7 +95,7 @@ const RegisterForm: NextPage = () => {
             <button disabled={loading} onClick={(event)=>handleSubmit(event)} className="disabled:bg-white border-x border-y border-blue-500 mt-5 h-10 w-2/6 rounded-xl text-blue-600
                                hover:bg-blue-500 hover:text-white ">
                 <p hidden={loading}>Sign Up</p>
-                <Loading size={"sm"} hidden={!loading}/>
+                <Loading type={"points"} size={"sm"} hidden={!loading}/>
             </button>
             <p className="mt-5 text-gray-500">Already have an account?
                 <Link href="/login" passHref><a className="hover:text-blue-400"> Login</a></Link>
