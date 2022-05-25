@@ -21,11 +21,11 @@ const SubmissionPage: NextPage = () => {
     const session = useSession();
     useEffect(() => {
         console.log(session)
-        laravelApi().get('/submissions').then(
-            (response) => setSubmissions(response.data.data)
-        ).catch(
-            (error) => console.log(error)
-        )
+        // laravelApi().get('/submissions').then(
+        //     (response) => setSubmissions(response.data.data)
+        // ).catch(
+        //     (error) => console.log(error)
+        // )
     }, [])
 
     const showModal = () => {
@@ -61,14 +61,6 @@ const SubmissionPage: NextPage = () => {
 export const getServerSideProps: GetServerSideProps = async ({req}) => {
     const session = await getSession({ req });
 
-    if ( !session ) {
-        return {
-            redirect: {
-                destination: '/login',
-                permanent: false
-            }
-        }
-    }
     return {
         props: {}
     }
