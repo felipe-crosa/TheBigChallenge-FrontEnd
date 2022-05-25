@@ -29,6 +29,20 @@ const RegisterPage: NextPage = () => {
 }
 export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
 
+    const session = await getSession({ req });
+
+    let { p = '/' } = query;
+
+    if ( session ) {
+        (session.user.role == 'patient') ? p='/submissions' : p='/discover'
+        return {
+            redirect: {
+                destination: p.toString(),
+                permanent: false
+            }
+        }
+    }
+
     return {
         props: { }
     }

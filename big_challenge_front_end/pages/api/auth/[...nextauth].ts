@@ -39,6 +39,9 @@ export default NextAuth({
         })
         // ...add more providers here
     ],
+    jwt: {
+        secret: process.env.JWT_SECRET_SEED, // deprecated
+    },
 
     pages: {
         signIn: '/login',
@@ -64,5 +67,7 @@ export default NextAuth({
         }
 
 
-    }
+    },
+
+    secret: process.env.JWT_SECRET,
 })
