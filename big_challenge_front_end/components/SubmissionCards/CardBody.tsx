@@ -3,7 +3,11 @@ import {FC, ReactNode} from "react";
 
 type Props = {
     children?: ReactNode
+    symptoms: string
+    observations: string
 }
+
+
 
 export const CardBody:FC<Props> = (props:Props) => {
     return (
@@ -17,7 +21,7 @@ export const CardBody:FC<Props> = (props:Props) => {
                 WebkitBoxOrient:"vertical",
             }}
             >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec ullamcorper metus. Etiam ex purus, luctus eu pharetra nec, aliquam vitae sapien. Curabitur venenatis scelerisque odio, aliquam interdum mauris malesuada sed. Maecenas commodo turpis elit, pellentesque cursus justo gravida et. Curabitur vitae luctus enim.
+                {props.symptoms}
             </p>
             <Divider className="mt-5"><Chip label="OBSERVATIONS"></Chip></Divider>
             <p className="overflow-hidden h-20 break-words"
@@ -27,9 +31,7 @@ export const CardBody:FC<Props> = (props:Props) => {
                    WebkitBoxOrient:"vertical",
                }}
             >
-                dfgklsdfglkjsdfghdsfdfgklsdfglkjsdfghdsfkgljhsdfgkjhdfdfgklsdfglkjsdfghdsfkgljhsdfgkjhdf
-                ghjdfkjgldsfjkhgsdljkfghjksdfgkjhsdfgkhsdfgghjdfkjgldsfjkhgsdljkfghjksdfgkjhsdfgkhsdfgkgl
-                jhsdfgkjhdfghjdfkjgldsfjkhgsdljkfghjksdfgkjhsdfgkhsdfg
+                {(props.observations)? props.observations : 'No observations'}
             </p>
             {props.children}
         </div>

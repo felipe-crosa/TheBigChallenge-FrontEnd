@@ -6,7 +6,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import {PatientProfile} from "../../components/profile/PatientProfile";
 import {DoctorProfile} from "../../components/profile/DoctorProfile";
 import Link from "next/link";
-import {UserContext} from "../../context/UserContext";
 
 
 const ProfilePage = () => {

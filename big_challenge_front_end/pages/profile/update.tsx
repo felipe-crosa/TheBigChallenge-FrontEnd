@@ -8,7 +8,6 @@ import {DoctorProfile} from "../../components/profile/DoctorProfile";
 import {SetupDoctorProfile} from "../../components/profile/SetupDoctorProfile";
 import {EditDoctorProfile} from "../../components/profile/EditDoctorProfile";
 import {EditPatientProfile} from "../../components/profile/EditPatientProfile";
-import {UserContext} from "../../context/UserContext";
 import {SetupPatientProfile} from "../../components/profile/SetupPatientProfile";
 
 

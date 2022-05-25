@@ -12,6 +12,7 @@ type Visible =  Dispatch<SetStateAction<boolean>>
 type Props = {
     setVisible : Visible
     bindings: Bindings
+
 }
 export const AssignModal= ({setVisible, bindings}:Props)=> {
 

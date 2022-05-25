@@ -1,9 +1,11 @@
-import React, {FC} from "react"
+import React, {FC, useContext} from "react"
 import MenuItem from "@mui/material/MenuItem";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Menu from "@mui/material/Menu";
 import Link from "next/link";
+import {signOut} from "next-auth/react";
+import {AuthContext} from "../../context/AuthContext";
 
 type ComponentProps = {
     anchorEl: HTMLElement | null
@@ -11,6 +13,7 @@ type ComponentProps = {
     handleClick: Function
 }
 export const ProfileMenu:FC<ComponentProps> = ({anchorEl,setAnchorEl,handleClick}:ComponentProps) => {
+    const context = useContext(AuthContext)
     const open = Boolean(anchorEl);
 
     const handleClose = () => {
@@ -31,8 +34,13 @@ export const ProfileMenu:FC<ComponentProps> = ({anchorEl,setAnchorEl,handleClick
             horizontal: 'left',
         }}
     >
-            <MenuItem><Link href="/profile">Profile</Link> <PersonIcon className="ml-4"/></MenuItem>
-        <MenuItem onClick={handleClose}>Logout <LogoutIcon className="ml-4"/></MenuItem>
+            <Link href="/profile" passHref>
+            <MenuItem>
+                    Profile
+                    <PersonIcon className="ml-4"/>
+            </MenuItem>
+            </Link>
+        <MenuItem onClick={()=>context.logout()}>Logout <LogoutIcon className="ml-4"/></MenuItem>
     </Menu>
     );
 }

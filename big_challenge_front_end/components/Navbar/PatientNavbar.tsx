@@ -37,8 +37,6 @@ export const PatientNavbar = () => {
                     <div className="bg-white rounded-full p-1">
                         <img width={35} className="rounded-full" src="/user.svg"/>
                     </div>
-
-                    {/*<a className="text-white font-semibold text-sm">Profile</a>*/}
                 </button>
             </div>
 

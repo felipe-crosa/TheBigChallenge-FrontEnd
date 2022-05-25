@@ -5,6 +5,8 @@ import React from "react";
 import {AssignedSubmissionCard} from "../../components/SubmissionCards/AssignedSubmissionCard";
 import {FilterNavbar} from "../../components/FilterNavbar/FilterNavbar";
 import {CardGrid} from "../../components/CardGrid";
+import {GetServerSideProps} from "next";
+import {getSession} from "next-auth/react";
 
 
 function valuetext(value: number) {
@@ -31,3 +33,10 @@ const AssignmentsPage: NextPage = () => {
 }
 
 export default AssignmentsPage
+
+
+export const getServerSideProps: GetServerSideProps = async ({req}) => {
+    return {
+        props: {}
+    }
+}

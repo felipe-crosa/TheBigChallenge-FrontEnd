@@ -7,7 +7,6 @@ import {PatientProfile} from "../../components/profile/PatientProfile";
 import {DoctorProfile} from "../../components/profile/DoctorProfile";
 import {SetupDoctorProfile} from "../../components/profile/SetupDoctorProfile";
 import {SetupPatientProfile} from "../../components/profile/SetupPatientProfile";
-import {UserContext} from "../../context/UserContext";
 
 
 const SetupPage = () => {
