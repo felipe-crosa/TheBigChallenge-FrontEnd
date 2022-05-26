@@ -30,6 +30,9 @@ export const CreateModal = ({setVisible, bindings, addSubmission}: Props) => {
         laravelApi(data.user.token).post('/createSubmission', {symptoms,observations,speciality}).then(
             (response)=> {
                 addSubmission(response.data.data)
+                setSymptoms('')
+                setObservations('')
+                setSpeciality('')
                 setVisible(false)
             }
         ).catch(
