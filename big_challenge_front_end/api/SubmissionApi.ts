@@ -8,10 +8,10 @@ export const axiosRequest = axios.create({
         'Content-Type': 'application/json',
     }
 });
-const laravelApi = () => {
+const laravelApi = (token: string) => {
     axiosRequest.interceptors.request.use((config) => {
             if (config.headers) {
-                config.headers['Authorization'] = "Bearer "/* + localStorage.getItem('token')*/ as string;
+                config.headers['Authorization'] = "Bearer "+ token;
             }
             return config;
         }

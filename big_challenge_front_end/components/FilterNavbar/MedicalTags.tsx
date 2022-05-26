@@ -6,6 +6,7 @@ import {
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
+import {ReactNode, useEffect} from "react";
 
 
 const medicalAreas = ['pediatrics','general','plastics','trauma','sdfgddsfg','dsfg','sfdg','hst',
@@ -155,7 +156,13 @@ const Listbox = styled('ul')(
 `,
 );
 
-export default function CustomizedHook() {
+type Props = {
+    children?: ReactNode
+    changeFilters: Function
+    filters: Object
+}
+
+export default function MedicalTags({changeFilters, filters}: Props) {
     const {
         getRootProps,
         getInputProps,
@@ -169,12 +176,14 @@ export default function CustomizedHook() {
         popupOpen
     } = useAutocomplete({
         id: 'customized-hook-demo',
-        defaultValue: medicalAreas,
+        defaultValue: filters.medicalAreas,
         multiple: true,
         options: medicalAreas,
         autoComplete: true,
         getOptionLabel: (option) => option,
     });
+
+    useEffect(()=>changeFilters({...filters,medicalAreas:value}),[value])
 
     return (
         <Root>

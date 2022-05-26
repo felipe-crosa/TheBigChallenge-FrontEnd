@@ -1,35 +1,30 @@
 import type {GetServerSideProps, NextPage} from 'next'
 import {Layout} from "../../components/layout/MainLayout";
-import React, {useEffect, useState} from "react";
+import React, { useState} from "react";
 import {FilterNavbar} from "../../components/FilterNavbar/FilterNavbar";
 import {CardGrid} from "../../components/CardGrid";
 import {Grid} from "@mui/material";
 import {Submission, SubmissionCard} from "../../components/SubmissionCards/SubmissionCard";
 import {useModal} from "@nextui-org/react";
 import {CreateModal} from "../../components/CreateModal";
-import EditIcon from "@mui/icons-material/Edit";
 import Fab from "@mui/material/Fab";
 import AddIcon from '@mui/icons-material/Add';
-import {Context} from "vm";
 import laravelApi from "../../api/SubmissionApi";
-import {getSession, useSession} from "next-auth/react";
+import {getSession} from "next-auth/react";
+import {useRouter} from "next/router";
 
 
-const SubmissionPage: NextPage = () => {
-    const [submissions, setSubmissions] = useState<Submission[]>([]);
+const SubmissionPage: NextPage = ({listSubmissions}) => {
+    const [submissions, setSubmissions] = useState<Submission[]>(listSubmissions);
     const {setVisible, bindings} = useModal();
-    const session = useSession();
-    useEffect(() => {
-        console.log(session)
-        // laravelApi().get('/submissions').then(
-        //     (response) => setSubmissions(response.data.data)
-        // ).catch(
-        //     (error) => console.log(error)
-        // )
-    }, [])
+    const router = useRouter()
 
     const showModal = () => {
         setVisible(true);
+    }
+
+    const handleClick = (id: string)=> {
+        router.replace('/submissions/'+id)
     }
 
 
@@ -42,7 +37,7 @@ const SubmissionPage: NextPage = () => {
 
                 <CardGrid>
                     {submissions.map((submission) => (
-                        <Grid key={submission.id} item xs={12} xl={2} sm={6} md={4} lg={3}>
+                        <Grid onClick={()=>handleClick(submission.id)} key={submission.id} item xs={12} xl={2} sm={6} md={4} lg={3}>
                             <SubmissionCard submission={submission}/>
                         </Grid>
                         ))}
@@ -60,9 +55,18 @@ const SubmissionPage: NextPage = () => {
 
 export const getServerSideProps: GetServerSideProps = async ({req}) => {
     const session = await getSession({ req });
+    let submissions:Object[] = []
+    await laravelApi(session.user.token).get('/submissions?status=pending').then(
+        (response)=> submissions = response.data.data
+    ).catch(
+        (error)=> console.log(error)
+    )
+
 
     return {
-        props: {}
+        props: {
+            listSubmissions: submissions
+        }
     }
 }
 

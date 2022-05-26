@@ -11,7 +11,8 @@ function valuetext(value: number) {
 
 type Props = {
     children?: ReactNode
-
+    changeFilters: Function
+    filters: Object
 }
 
 
@@ -28,10 +29,10 @@ export const DiscoverPopover = (props: Props) => {
     };
 
 
-    const [value, setValue] = React.useState<number[]>([0, 100]);
+    const [ageRange, setAgeRange] = React.useState<number[]>([0, 100]);
 
     const handleChange = (event: Event, newValue: number | number[]) => {
-        setValue(newValue as number[]);
+        setAgeRange(newValue as number[]);
     };
 
     const [startDate, setStart] = useState<string>('');
@@ -65,7 +66,7 @@ export const DiscoverPopover = (props: Props) => {
             <Slider
                 className="mt-2 mb-2 w-52 mx-auto"
                 getAriaLabel={() => 'Age range'}
-                value={value}
+                value={ageRange}
                 onChange={handleChange}
                 valueLabelDisplay="auto"
                 getAriaValueText={valuetext}
