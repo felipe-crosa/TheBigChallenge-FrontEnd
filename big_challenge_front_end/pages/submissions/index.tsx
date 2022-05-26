@@ -27,6 +27,10 @@ const SubmissionPage: NextPage = ({listSubmissions}) => {
         router.replace('/submissions/'+id)
     }
 
+    const addSubmission = (submission: Submission)=>{
+        setSubmissions([submission,...submissions])
+    }
+
 
     return (
         <Layout>
@@ -48,7 +52,7 @@ const SubmissionPage: NextPage = ({listSubmissions}) => {
                     < AddIcon/>
                 </Fab>
             </div>
-            <CreateModal setVisible={setVisible} bindings={bindings}/>
+            <CreateModal addSubmission={addSubmission} setVisible={setVisible} bindings={bindings}/>
         </Layout>
     )
 }
