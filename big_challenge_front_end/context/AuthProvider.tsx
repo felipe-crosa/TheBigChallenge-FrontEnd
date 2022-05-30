@@ -39,7 +39,7 @@ export const AuthProvider:FC = ({ children }) => {
 
 
     const logout = async () => {
-        //await laravelApi().post('/logout')
+        await laravelApi(state.user.token).post('/logout')
         signOut();
     }
 

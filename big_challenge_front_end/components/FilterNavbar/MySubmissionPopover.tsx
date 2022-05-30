@@ -1,57 +1,46 @@
-import type {NextPage} from 'next'
-import {Input, NextUIProvider, useModal} from "@nextui-org/react";
-import React, {useRef, useState} from "react";
+
+import React, {ReactNode, useRef, useState} from "react";
 import {Chip, Divider, Slider, ToggleButton, ToggleButtonGroup} from "@mui/material";
-import CustomizedHook from "./MedicalTags";
+import {FC} from "preact/compat";
+import MedicalTags from "./MedicalTags";
 
 function valuetext(value: number) {
     return `${value} years`;
 }
 
+type Props = {
+    children?: ReactNode
+    changeFilters: Function
+    filters: Object
+}
+export const MySubmissionPopover: FC<Props> = ({changeFilters, filters}:Props) => {
 
-export const MySubmissionPopover = () => {
 
-    const tags = useRef(null);
-
-    const [gender, setGender] = React.useState(['female', 'male']);
-    const handleGender = (
-        event: React.MouseEvent<HTMLElement>,
-        newGender: string[],
-    ) => {
-        if (newGender.length) {
-            setGender(newGender);
-        }
-    };
-
-    const [status, setStatus] = React.useState(['pending', 'in-review', 'resolved']);
+    const [status, setStatus] = React.useState(filters.status);
     const handleStatus = (
         event: React.MouseEvent<HTMLElement>,
         newStatus: string[],
     ) => {
         if (newStatus.length) {
             setStatus(newStatus);
+            changeFilters({...filters,status:newStatus})
         }
     };
 
-    const [value, setValue] = React.useState<number[]>([0, 100]);
+    const [startDate, setStart] = useState<string>(filters.startDate);
 
-    const handleChange = (event: Event, newValue: number | number[]) => {
-        setValue(newValue as number[]);
-    };
-
-    const [startDate, setStart] = useState<string>('');
-
-    const [endDate, setEnd] = useState<string>('');
-
-    const baseTagifySettings = {
-        blacklist: ["xxx", "yyy", "zzz"],
-        maxTags: 6,
-        //backspace: "edit",
-        placeholder: "type something",
-        dropdown: {
-            enabled: 0 // a;ways show suggestions dropdown
-        }
+    const handleChangeStart = (newStart: string) => {
+        setStart(newStart)
+        changeFilters({...filters, startDate:newStart})
     }
+
+    const [endDate, setEnd] = useState<string>(filters.endDate);
+
+    const handleChangeEnd = (newEnd: string) => {
+        setEnd(newEnd)
+        changeFilters({...filters, endDate:newEnd})
+    }
+
 
     return (
         <div className="flex flex-col md:flex-row">
@@ -69,7 +58,7 @@ export const MySubmissionPopover = () => {
                             className=" bg-slate-200 h-8 w-36 rounded-2xl px-2"
                             type="date"
                             style={{width: "28"}}
-                            onChange={(event) => setStart(event.target.value)}
+                            onChange={(event) => handleChangeStart(event.target.value)}
                         />
                     </div>
 
@@ -81,7 +70,7 @@ export const MySubmissionPopover = () => {
                             className=" bg-slate-200 h-8 w-36 rounded-2xl px-2"
                             type="date"
                             style={{width: "28"}}
-                            onChange={(event) => setEnd(event.target.value)}
+                            onChange={(event) => handleChangeEnd(event.target.value)}
 
                         />
                     </div>
@@ -112,7 +101,7 @@ export const MySubmissionPopover = () => {
             </div>
             <div className=" bg-white border-l w-80 flex flex-col pb-10">
                 <div className="mt-2"><Divider><Chip label="Category"/></Divider></div>
-                <CustomizedHook/>
+                <MedicalTags changeFilters={changeFilters} filters={filters}/>
             </div>
         </div>
     )

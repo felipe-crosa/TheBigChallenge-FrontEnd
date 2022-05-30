@@ -1,8 +1,10 @@
 import {Modal, useModal, Button, Text} from "@nextui-org/react";
 import {BindingsChangeTarget} from "@nextui-org/react/types/use-input/use-input";
-import {Dispatch, SetStateAction} from "react";
+import {Dispatch, SetStateAction, useRef, useState} from "react";
 import {Autocomplete, Chip, Divider, TextField} from "@mui/material";
 import Link from "next/link";
+import {useSession} from "next-auth/react";
+import laravelApi from "../api/SubmissionApi";
 
 type Bindings = {
     open: boolean
@@ -14,11 +16,41 @@ type Visible = Dispatch<SetStateAction<boolean>>
 type Props = {
     setVisible: Visible
     bindings: Bindings
+    addSubmission: Function
 }
 
 const medicalAreas = ['General', 'Pediatrics', 'Traumatology', 'Plastic']
-export const CreateModal = ({setVisible, bindings}: Props) => {
+export const CreateModal = ({setVisible, bindings, addSubmission}: Props) => {
+    const {data} = useSession();
+    const [symptoms, setSymptoms] = useState<string>('');
+    const [observations, setObservations] = useState<string>('');
+    const [speciality, setSpeciality] = useState<string>('');
 
+    const handleCreate = () => {
+        laravelApi(data.user.token).post('/createSubmission', {symptoms,observations,speciality}).then(
+            (response)=> {
+                addSubmission(response.data.data)
+                setSymptoms('')
+                setObservations('')
+                setSpeciality('')
+                setVisible(false)
+            }
+        ).catch(
+            (error)=> {
+                console.log(error)
+            }
+        )
+    }
+
+    const handleSymptoms = (newValue: string) => {
+        setSymptoms(newValue)
+    }
+    const handleObservations = (newValue: string) => {
+        setObservations(newValue)
+    }
+    const handleSpeciality = (newValue: string) => {
+        setSpeciality(newValue)
+    }
 
     return (
         <div>
@@ -67,13 +99,14 @@ export const CreateModal = ({setVisible, bindings}: Props) => {
                             disablePortal
                             options={medicalAreas}
                             sx={{width: 300}}
+                            onChange={(event,value)=>handleSpeciality(value)}
                             renderInput={(params) => <TextField {...params} label="Select Area"/>}
                         />
                     </div>
 
                     <Divider><Chip label="Symptoms"/></Divider>
                     <div className="h-fit">
-                        <textarea rows={7} className="h-full p-3 rounded-xl w-full bg-slate-200 "
+                        <textarea value={symptoms} onChange={(event)=>handleSymptoms(event.target.value)} rows={7} className="h-full p-3 rounded-xl w-full bg-slate-200 "
                                   placeholder="Enter your symptoms"/>
                     </div>
 
@@ -81,7 +114,7 @@ export const CreateModal = ({setVisible, bindings}: Props) => {
                     <Divider className="mt-2"><Chip label="Observations"/></Divider>
 
                     <div className="h-fit">
-                        <textarea rows={4} className="h-full p-3 rounded-xl w-full bg-slate-200 "
+                        <textarea value={observations} onChange={(event)=>handleObservations(event.target.value)} rows={4} className="h-full p-3 rounded-xl w-full bg-slate-200 "
                                   placeholder="Enter any observations"/>
                     </div>
 
@@ -94,7 +127,7 @@ export const CreateModal = ({setVisible, bindings}: Props) => {
                             Cancel
                         </button>
                         <button className="bg-blue-500 h-8 rounded-xl px-5 text-white"
-                                onClick={() => setVisible(false)}>
+                                onClick={() => handleCreate()}>
                             Create
                         </button>
                     </div>
